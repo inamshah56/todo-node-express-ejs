@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Kode+Mono:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Protest+Riot&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/e8389566a9.js" crossorigin="anonymous"></script>
+    <title>Todo App</title>
+    <style>
+        body {
+            font-family: 'Protest Riot', sans-serif;
+            color: #000000;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff6b6b, #7873f5);
+        }
+
+        .container {
+            width: 400px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        h1,
+        h2 {
+            font-family: 'Protest Riot', sans-serif;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #25506b;
+            text-decoration: underline;
+        }
+
+        form {
+            display: flex;
+            margin: 10px 0;
+            /* margin-bottom: 20px; */
+        }
+
+        input[type='text'] {
+            flex: 1;
+            padding: 8px;
+            border: 2px solid #ccc;
+            background-color: #fff;
+            border-radius: 5px;
+            margin-right: 10px;
+            font-family: 'Kodo Mono', monospace;
+            font-size: 16px;
+        }
+
+        button[type='submit'] {
+            font-size: 16px;
+            padding: 8px 16px;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(180deg, #3498db, #25506b);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            /* cursor: pointer; */
+        }
+
+        button[type='submit']:hover {
+            cursor: pointer;
+            background: linear-gradient(180deg, #5fb565, #0c5a06);
+            /* background-color: #F2AF29; */
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 10px;
+            align-items: center;
+            /* box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.1);
+            -webkit-box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.1); */
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #25506b;
+            padding: 10px 0;
+            color: #5d5d5d;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            text-transform: capitalize;
+            /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+            margin-bottom: 10px;
+        }
+
+        li:last-child {
+            border-bottom: 0;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Todo App</h1>
+
+        <form action="/add" method="POST">
+            <input type="text" name="title" placeholder="add todo" />
+            <button type="submit"><i class="fa-solid fa-plus"></i></button>
+        </form>
+        <ul>
+            <% todos.forEach(todo=> { %> <% if (!todo.completed) { %>
+                    <li>
+                        <span class="<%= todo.completed ? 'completed' : '' %>">
+                            <%= todo.title %>
+                        </span>
+                        <form action="/mark/<%= todo.id %>" method="POST">
+                            <button type="submit"><i class="fa-solid fa-check"></i></button>
+                        </form>
+                    </li>
+                    <% } %>
+                        <% }); %>
+        </ul>
+
+        <h2>Completed</h2>
+        <ul>
+            <% todos.forEach(todo=> { %> <% if (todo.completed) { %>
+                    <li>
+                        <span class="completed">
+                            <%= todo.title %>
+                        </span>
+                        <form action="/delete/<%= todo.id %>" method="POST" style="display: inline">
+                            <button type="submit"><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                    </li>
+                    <% } %>
+                        <% }); %>
+        </ul>
+    </div>
+</body>
+
+</html>
